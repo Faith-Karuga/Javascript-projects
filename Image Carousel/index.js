@@ -37,6 +37,18 @@ const slides = document.getElementById('slides');
 
     const thumbnails = document.querySelectorAll('.thumbnail');
 
+    // Add click listener to all carousel images
+    const slideImages = slides.querySelectorAll('img');
+    slideImages.forEach(img => {
+      img.addEventListener('click', () => {
+        if (isAutoPlayPaused) {
+          resumeAutoPlay();
+        } else {
+          pauseAutoPlay();
+        }
+      });
+    });
+
     function updateCarousel() {
       slides.style.transform = `translateX(-${currentIndex * 100}%)`;
       indicators.forEach(dot => dot.classList.remove('active'));
@@ -91,17 +103,6 @@ const slides = document.getElementById('slides');
     prevBtn.addEventListener('click', () => {
       prevSlide();
       resumeAutoPlay();
-    });
-
-    // Click on current image to toggle pause/resume
-    slides.addEventListener('click', (e) => {
-      if (e.target.tagName === 'IMG') {
-        if (isAutoPlayPaused) {
-          resumeAutoPlay();
-        } else {
-          pauseAutoPlay();
-        }
-      }
     });
 
     startAutoSlide();
