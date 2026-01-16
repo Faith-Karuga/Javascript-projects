@@ -93,4 +93,15 @@ const slides = document.getElementById('slides');
       resumeAutoPlay();
     });
 
+    // Click on current image to toggle pause/resume
+    slides.addEventListener('click', (e) => {
+      if (e.target.tagName === 'IMG') {
+        if (isAutoPlayPaused) {
+          resumeAutoPlay();
+        } else {
+          pauseAutoPlay();
+        }
+      }
+    });
+
     startAutoSlide();
