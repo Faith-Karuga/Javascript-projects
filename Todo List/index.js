@@ -16,8 +16,6 @@ const taskInput = document.getElementById('taskInput');
       completedList.innerHTML = '';
       
       tasks.forEach((task, index) => {
-        const li = document.createElement('li');
-        
         const checkbox = document.createElement('input');
         checkbox.type = 'checkbox';
         checkbox.checked = task.completed;
@@ -35,20 +33,6 @@ const taskInput = document.getElementById('taskInput');
         }
         label.textContent = displayText;
 
-        const buttonContainer = document.createElement('div');
-        buttonContainer.className = 'button-container';
-
-        const editBtn = document.createElement('button');
-        editBtn.textContent = 'Edit';
-        editBtn.className = 'edit-btn';
-        editBtn.addEventListener('click', () => {
-          taskInput.value = task.text;
-          taskDate.value = task.date || '';
-          editingIndex = index;
-          addTaskBtn.textContent = 'Update';
-          taskInput.focus();
-        });
-
         const deleteBtn = document.createElement('button');
         deleteBtn.textContent = 'Delete';
         deleteBtn.className = 'delete-btn';
@@ -58,16 +42,34 @@ const taskInput = document.getElementById('taskInput');
           renderTasks();
         });
 
-        buttonContainer.appendChild(editBtn);
-        buttonContainer.appendChild(deleteBtn);
-
-        li.appendChild(checkbox);
-        li.appendChild(label);
-        li.appendChild(buttonContainer);
-
         if (task.completed) {
-          completedList.appendChild(li.cloneNode(true));
+          const li = document.createElement('li');
+          li.appendChild(checkbox);
+          li.appendChild(label);
+          li.appendChild(deleteBtn);
+          completedList.appendChild(li);
         } else {
+          const li = document.createElement('li');
+          const buttonContainer = document.createElement('div');
+          buttonContainer.className = 'button-container';
+
+          const editBtn = document.createElement('button');
+          editBtn.textContent = 'Edit';
+          editBtn.className = 'edit-btn';
+          editBtn.addEventListener('click', () => {
+            taskInput.value = task.text;
+            taskDate.value = task.date || '';
+            editingIndex = index;
+            addTaskBtn.textContent = 'Update';
+            taskInput.focus();
+          });
+
+          buttonContainer.appendChild(editBtn);
+          buttonContainer.appendChild(deleteBtn);
+
+          li.appendChild(checkbox);
+          li.appendChild(label);
+          li.appendChild(buttonContainer);
           taskList.appendChild(li);
         }
       });
@@ -75,15 +77,20 @@ const taskInput = document.getElementById('taskInput');
 
     addTaskBtn.addEventListener('click', () => {
       const text = taskInput.value.trim();
-      if (text === '') return;
+      const date = taskDate.value;
+      
+      if (text === '' || date === '') {
+        alert('Please provide both task and date');
+        return;
+      }
 
       if (editingIndex !== null) {
         tasks[editingIndex].text = text;
-        tasks[editingIndex].date = taskDate.value;
+        tasks[editingIndex].date = date;
         editingIndex = null;
         addTaskBtn.textContent = 'Add';
       } else {
-        tasks.push({ text, completed: false, date: taskDate.value });
+        tasks.push({ text, completed: false, date });
       }
       
       saveTasks();
