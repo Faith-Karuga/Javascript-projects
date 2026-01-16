@@ -8,16 +8,60 @@
 <body>
 
   <div class="quiz-container">
-    <h2 id="question">Question Text</h2>
+    <!-- Quiz Section -->
+    <div id="quiz-section">
+      <div class="question-indicator">
+        <span id="current-question">1</span> / <span id="total-questions">3</span>
+      </div>
+      <h2 id="question">Question Text</h2>
 
-    <div id="answers">
-      <!-- Answer buttons will be inserted here -->
+      <div id="answers">
+        <!-- Answer buttons will be inserted here -->
+      </div>
+
+      <div class="button-container">
+        <button id="prev-btn" class="hide">Previous</button>
+        <button id="next-btn" disabled>Next</button>
+      </div>
     </div>
 
-    <button id="next-btn">Next</button>
+    <!-- Review Section -->
+    <div id="review-section" class="hide">
+      <h2>Review Your Answers</h2>
+      <div id="review-content">
+        <!-- Review items will be inserted here -->
+      </div>
+      <div class="button-container">
+        <button id="back-to-quiz-btn">Back to Quiz</button>
+        <button id="submit-btn" class="submit-btn">Submit Quiz</button>
+      </div>
+    </div>
 
-    <div id="result" class="hide">
-      <h3>Your Score: <span id="score"></span></h3>
+    <!-- Success Notification -->
+    <div id="success-notification" class="notification hide">
+      <h3>Quiz Submitted Successfully!</h3>
+      <p>You can now view your results.</p>
+    </div>
+
+    <!-- Results Section -->
+    <div id="result-section" class="hide">
+      <h2>Quiz Results</h2>
+      <div class="score-summary">
+        <h3>Your Score</h3>
+        <div class="score-display">
+          <span id="score" class="score-number">0</span>
+          <span class="score-total">/ <span id="total-score">3</span></span>
+        </div>
+        <div class="score-percentage">
+          <span id="percentage">0%</span>
+        </div>
+      </div>
+      <div class="results-details">
+        <h3>Answer Review</h3>
+        <div id="results-content">
+          <!-- Results will be inserted here -->
+        </div>
+      </div>
       <button id="restart-btn">Restart Quiz</button>
     </div>
   </div>

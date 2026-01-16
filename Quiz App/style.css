@@ -4,50 +4,263 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
+  padding: 20px;
 }
 
 .quiz-container {
   background: #fff;
-  padding: 20px;
-  width: 350px;
+  padding: 30px;
+  max-width: 500px;
+  width: 100%;
   border-radius: 8px;
   box-shadow: 0 5px 15px rgba(0,0,0,0.1);
   text-align: center;
 }
 
+.question-indicator {
+  color: #666;
+  margin-bottom: 15px;
+  font-size: 14px;
+}
+
+#question {
+  margin: 20px 0;
+  color: #333;
+}
+
+#answers {
+  margin: 20px 0;
+}
+
 #answers button {
   display: block;
   width: 100%;
-  margin: 8px 0;
-  padding: 10px;
-  border: none;
+  margin: 10px 0;
+  padding: 12px;
+  border: 2px solid #e0e0e0;
   border-radius: 5px;
   cursor: pointer;
-  background: #e0e0e0;
+  background: #fff;
+  font-size: 14px;
+  transition: all 0.3s ease;
 }
 
-#answers button.correct {
-  background: #4caf50;
-  color: #fff;
+#answers button:hover {
+  border-color: #2196f3;
+  background: #f0f8ff;
 }
 
-#answers button.wrong {
-  background: #f44336;
-  color: #fff;
-}
-
-#next-btn {
-  margin-top: 10px;
-  padding: 10px;
-  width: 100%;
-  border: none;
+#answers button.selected {
   background: #2196f3;
   color: white;
+  border-color: #2196f3;
+}
+
+#answers button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.button-container {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+#prev-btn,
+#next-btn,
+#back-to-quiz-btn,
+#submit-btn,
+#restart-btn {
+  flex: 1;
+  padding: 12px;
+  border: none;
   border-radius: 5px;
   cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+#prev-btn,
+#next-btn {
+  background: #2196f3;
+  color: white;
+}
+
+#prev-btn:hover:not(:disabled),
+#next-btn:hover:not(:disabled) {
+  background: #0b7dda;
+}
+
+#next-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+#back-to-quiz-btn {
+  background: #757575;
+  color: white;
+}
+
+#back-to-quiz-btn:hover {
+  background: #616161;
+}
+
+.submit-btn {
+  background: #4caf50 !important;
+  color: white;
+}
+
+.submit-btn:hover {
+  background: #45a049 !important;
+}
+
+#restart-btn {
+  background: #2196f3;
+  color: white;
+  width: 100%;
+  margin-top: 20px;
+}
+
+#restart-btn:hover {
+  background: #0b7dda;
 }
 
 .hide {
   display: none;
+}
+
+/* Review Section */
+#review-section {
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+.review-item {
+  background: #f9f9f9;
+  padding: 15px;
+  margin: 12px 0;
+  border-radius: 5px;
+  border-left: 4px solid #2196f3;
+  text-align: left;
+}
+
+.review-item h4 {
+  margin: 0 0 10px 0;
+  color: #333;
+}
+
+.review-answer {
+  color: #666;
+  font-size: 14px;
+}
+
+/* Results Section */
+.score-summary {
+  background: #f0f8ff;
+  padding: 30px;
+  margin: 20px 0;
+  border-radius: 8px;
+  border: 2px solid #2196f3;
+}
+
+.score-summary h3 {
+  margin: 0 0 20px 0;
+  color: #333;
+}
+
+.score-display {
+  font-size: 48px;
+  color: #2196f3;
+  margin: 10px 0;
+  font-weight: bold;
+}
+
+.score-total {
+  font-size: 24px;
+  color: #666;
+}
+
+.score-percentage {
+  font-size: 24px;
+  color: #4caf50;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+.results-details {
+  margin: 20px 0;
+  text-align: left;
+}
+
+.results-details h3 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+#results-content {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.result-item {
+  background: #f9f9f9;
+  padding: 15px;
+  margin: 12px 0;
+  border-radius: 5px;
+  border-left: 4px solid #2196f3;
+}
+
+.result-item h4 {
+  margin: 0 0 10px 0;
+  color: #333;
+}
+
+.result-correct {
+  color: #4caf50;
+  font-size: 14px;
+  margin: 8px 0;
+}
+
+.result-wrong {
+  color: #f44336;
+  font-size: 14px;
+  margin: 8px 0;
+}
+
+/* Success Notification */
+.notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: #4caf50;
+  color: white;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  z-index: 1000;
+  animation: slideIn 0.3s ease-in-out;
+}
+
+.notification h3 {
+  margin: 0 0 10px 0;
+}
+
+.notification p {
+  margin: 0;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(400px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
