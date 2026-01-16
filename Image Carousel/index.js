@@ -86,13 +86,11 @@ const slides = document.getElementById('slides');
     nextBtn.addEventListener('click', () => {
       nextSlide();
       resumeAutoPlay();
-      startAutoSlide();
     });
 
     prevBtn.addEventListener('click', () => {
       prevSlide();
       resumeAutoPlay();
-      startAutoSlide();
     });
 
     startAutoSlide();
