@@ -37,6 +37,13 @@
       border: 1px solid #ccc;
     }
 
+    input[type="date"] {
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      flex: 0.7;
+    }
+
     button {
       padding: 10px 15px;
       border: none;
@@ -49,26 +56,81 @@
       color: white;
     }
 
-    ul {
-      list-style: none;
-      padding: 0;
+    .add-btn:hover {
+      background: #45a049;
+    }
+
+    .tasks-section,
+    .completed-section {
       margin-top: 20px;
+    }
+
+    .tasks-section h2,
+    .completed-section h2 {
+      font-size: 16px;
+      margin-bottom: 10px;
+      color: #333;
+      border-bottom: 2px solid #4caf50;
+      padding-bottom: 5px;
+    }
+
+    .completed-section h2 {
+      border-bottom-color: #9c27b0;
     }
 
     li {
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      gap: 10px;
       padding: 10px;
       border-bottom: 1px solid #eee;
     }
 
-    li.completed span {
+    li input[type="checkbox"] {
+      cursor: pointer;
+      width: 18px;
+      height: 18px;
+    }
+
+    .task-label {
+      flex: 1;
+      word-break: break-word;
+    }
+
+    li.completed .task-label {
       text-decoration: line-through;
       color: #888;
+    }
+
+    .button-container {
+      display: flex;
+      gap: 5px;
+    }
+
+    .edit-btn {
+      background: #2196f3;
+      color: white;
+      padding: 8px 12px;
+      font-size: 12px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .edit-btn:hover {
+      background: #1976d2;
     }
 
     .delete-btn {
       background: #e53935;
       color: white;
+      padding: 8px 12px;
+      font-size: 12px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .delete-btn:hover {
+      background: #c62828;
     }

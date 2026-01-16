@@ -1,8 +1,11 @@
 const taskInput = document.getElementById('taskInput');
+    const taskDate = document.getElementById('taskDate');
     const addTaskBtn = document.getElementById('addTaskBtn');
     const taskList = document.getElementById('taskList');
+    const completedList = document.getElementById('completedList');
 
     let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+    let editingIndex = null;
 
     function saveTasks() { 
       localStorage.setItem('tasks', JSON.stringify(tasks));
@@ -10,13 +13,11 @@ const taskInput = document.getElementById('taskInput');
 
     function renderTasks() {
       taskList.innerHTML = '';
+      completedList.innerHTML = '';
+      
       tasks.forEach((task, index) => {
         const li = document.createElement('li');
-        li.className = task.completed ? 'completed' : '';
-
-        const label = document.createElement('span');
-        label.textContent = task.text;
-
+        
         const checkbox = document.createElement('input');
         checkbox.type = 'checkbox';
         checkbox.checked = task.completed;
@@ -24,6 +25,28 @@ const taskInput = document.getElementById('taskInput');
           tasks[index].completed = checkbox.checked;
           saveTasks();
           renderTasks();
+        });
+
+        const label = document.createElement('span');
+        label.className = 'task-label';
+        let displayText = task.text;
+        if (task.date) {
+          displayText += ` (${task.date})`;
+        }
+        label.textContent = displayText;
+
+        const buttonContainer = document.createElement('div');
+        buttonContainer.className = 'button-container';
+
+        const editBtn = document.createElement('button');
+        editBtn.textContent = 'Edit';
+        editBtn.className = 'edit-btn';
+        editBtn.addEventListener('click', () => {
+          taskInput.value = task.text;
+          taskDate.value = task.date || '';
+          editingIndex = index;
+          addTaskBtn.textContent = 'Update';
+          taskInput.focus();
         });
 
         const deleteBtn = document.createElement('button');
@@ -35,10 +58,18 @@ const taskInput = document.getElementById('taskInput');
           renderTasks();
         });
 
-        li.prepend(checkbox);
+        buttonContainer.appendChild(editBtn);
+        buttonContainer.appendChild(deleteBtn);
+
+        li.appendChild(checkbox);
         li.appendChild(label);
-        li.appendChild(deleteBtn);
-        taskList.appendChild(li);
+        li.appendChild(buttonContainer);
+
+        if (task.completed) {
+          completedList.appendChild(li.cloneNode(true));
+        } else {
+          taskList.appendChild(li);
+        }
       });
     }
 
@@ -46,10 +77,25 @@ const taskInput = document.getElementById('taskInput');
       const text = taskInput.value.trim();
       if (text === '') return;
 
-      tasks.push({ text, completed: false });
+      if (editingIndex !== null) {
+        tasks[editingIndex].text = text;
+        tasks[editingIndex].date = taskDate.value;
+        editingIndex = null;
+        addTaskBtn.textContent = 'Add';
+      } else {
+        tasks.push({ text, completed: false, date: taskDate.value });
+      }
+      
       saveTasks();
       renderTasks();
       taskInput.value = '';
+      taskDate.value = '';
+    });
+
+    taskInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        addTaskBtn.click();
+      }
     });
 
     renderTasks();
