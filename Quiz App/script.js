@@ -145,6 +145,7 @@ function showReview() {
 }
 
 document.getElementById("back-to-quiz-btn").onclick = () => {
+  successNotification.classList.add("hide");
   reviewSection.classList.add("hide");
   quizSection.classList.remove("hide");
 };
@@ -222,6 +223,7 @@ document.getElementById("restart-btn").onclick = () => {
   quizSection.classList.remove("hide");
   reviewSection.classList.add("hide");
   resultSection.classList.add("hide");
+  successNotification.classList.add("hide");
   showQuestion();
 };
 
