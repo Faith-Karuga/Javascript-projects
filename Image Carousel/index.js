@@ -20,11 +20,12 @@ const slides = document.getElementById('slides');
 
     const indicators = document.querySelectorAll('.indicator');
 
-    // Create thumbnails
+    // Create thumbnails from carousel slide images
     for (let i = 0; i < slideCount; i++) {
+      const slideImg = slides.children[i].querySelector('img');
       const thumbnail = document.createElement('img');
-      thumbnail.src = `https://picsum.photos/100/100?${i + 1}`;
-      thumbnail.alt = `Thumbnail ${i + 1}`;
+      thumbnail.src = slideImg.src;
+      thumbnail.alt = slideImg.alt;
       thumbnail.classList.add('thumbnail');
       if (i === 0) thumbnail.classList.add('active-thumb');
       thumbnail.addEventListener('click', () => {
