@@ -160,12 +160,16 @@ document.getElementById("submit-btn").onclick = () => {
     }
   });
 
-  // Show success notification
+  // Store score for results page
+  window.quizScore = score;
+
+  // Show success notification popup
   successNotification.classList.remove("hide");
-  setTimeout(() => {
-    successNotification.classList.add("hide");
-    showResults(score);
-  }, 2000);
+};
+
+document.getElementById("view-results-btn").onclick = () => {
+  successNotification.classList.add("hide");
+  showResults(window.quizScore);
 };
 
 function showResults(score) {
