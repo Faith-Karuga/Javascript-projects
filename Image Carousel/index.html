@@ -8,17 +8,21 @@
 </head>
 <body>
 
-  <div class="carousel">
-    <div class="slides" id="slides">
-      <div class="slide"><img src="https://picsum.photos/600/400?1" alt="Image 1"></div>
-      <div class="slide"><img src="https://picsum.photos/600/400?2" alt="Image 2"></div>
-      <div class="slide"><img src="https://picsum.photos/600/400?3" alt="Image 3"></div>
+  <div class="container">
+    <div class="carousel">
+      <div class="slides" id="slides">
+        <div class="slide"><img src="https://picsum.photos/600/400?1" alt="Image 1"></div>
+        <div class="slide"><img src="https://picsum.photos/600/400?2" alt="Image 2"></div>
+        <div class="slide"><img src="https://picsum.photos/600/400?3" alt="Image 3"></div>
+      </div>
+
+      <button class="nav-btn prev" id="prev">❮</button>
+      <button class="nav-btn next" id="next">❯</button>
+
+      <div class="indicators" id="indicators"></div>
     </div>
 
-    <button class="nav-btn prev" id="prev">❮</button>
-    <button class="nav-btn next" id="next">❯</button>
-
-    <div class="indicators" id="indicators"></div>
+    <div class="thumbnails" id="thumbnails"></div>
   </div>
 
   <script src="index.js"> </script>
