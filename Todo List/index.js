@@ -3,6 +3,11 @@ const taskInput = document.getElementById('taskInput');
     const addTaskBtn = document.getElementById('addTaskBtn');
     const taskList = document.getElementById('taskList');
     const completedList = document.getElementById('completedList');
+    const editModal = document.getElementById('editModal');
+    const modalTaskInput = document.getElementById('modalTaskInput');
+    const modalTaskDate = document.getElementById('modalTaskDate');
+    const modalUpdateBtn = document.getElementById('modalUpdateBtn');
+    const modalCancelBtn = document.getElementById('modalCancelBtn');
 
     let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
     let editingIndex = null;
@@ -57,11 +62,10 @@ const taskInput = document.getElementById('taskInput');
           editBtn.textContent = 'Edit';
           editBtn.className = 'edit-btn';
           editBtn.addEventListener('click', () => {
-            taskInput.value = task.text;
-            taskDate.value = task.date || '';
+            modalTaskInput.value = task.text;
+            modalTaskDate.value = task.date || '';
             editingIndex = index;
-            addTaskBtn.textContent = 'Update';
-            taskInput.focus();
+            editModal.style.display = 'flex';
           });
 
           buttonContainer.appendChild(editBtn);
@@ -102,6 +106,43 @@ const taskInput = document.getElementById('taskInput');
     taskInput.addEventListener('keypress', (e) => {
       if (e.key === 'Enter') {
         addTaskBtn.click();
+      }
+    });
+
+    // Modal event listeners
+    modalUpdateBtn.addEventListener('click', () => {
+      const text = modalTaskInput.value.trim();
+      const date = modalTaskDate.value;
+
+      if (text === '' || date === '') {
+        alert('Please provide both task and date');
+        return;
+      }
+
+      if (editingIndex !== null) {
+        tasks[editingIndex].text = text;
+        tasks[editingIndex].date = date;
+        editingIndex = null;
+      }
+
+      saveTasks();
+      renderTasks();
+      editModal.style.display = 'none';
+      modalTaskInput.value = '';
+      modalTaskDate.value = '';
+    });
+
+    modalCancelBtn.addEventListener('click', () => {
+      editModal.style.display = 'none';
+      editingIndex = null;
+      modalTaskInput.value = '';
+      modalTaskDate.value = '';
+    });
+
+    // Close modal when clicking outside
+    editModal.addEventListener('click', (e) => {
+      if (e.target === editModal) {
+        modalCancelBtn.click();
       }
     });
 
