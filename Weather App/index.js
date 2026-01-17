@@ -30,6 +30,7 @@ async function getWeather() {
     }
 
     const data = await response.json();
+    console.log('Forecast days available:', data.forecast.forecastday.length);
     displayWeather(data);
     displayForecast(data);
   } catch (error) {
@@ -53,8 +54,11 @@ function displayWeather(data) {
   `;
 }
 
+let forecastData = []; // Store forecast data globally
+
 function displayForecast(data) {
-  const forecastDays = data.forecast.forecastday;
+  forecastData = data.forecast.forecastday; // Store forecast data
+  const forecastDays = forecastData;
   const today = new Date();
   const todayDateStr = today.toISOString().split('T')[0];
   
@@ -70,7 +74,7 @@ function displayForecast(data) {
     const isToday = day.date === todayDateStr;
     
     forecastHTML += `
-      <div class="forecast-day ${isToday ? 'today' : ''}">
+      <div class="forecast-day ${isToday ? 'today' : ''}" data-date="${day.date}" style="cursor: pointer;">
         <p><strong>${dayName}</strong></p>
         <img src="https:${icon}" alt="Weather icon" />
         <p>${description}</p>
@@ -85,6 +89,14 @@ function displayForecast(data) {
   
   // Display hourly predictions for today
   displayTodayHourly(forecastDays);
+  
+  // Add click event listeners to forecast days
+  document.querySelectorAll('.forecast-day').forEach(day => {
+    day.addEventListener('click', function() {
+      const selectedDate = this.getAttribute('data-date');
+      displaySelectedDayHourly(selectedDate);
+    });
+  });
 }
 
 function displayTodayHourly(forecastDays) {
@@ -94,7 +106,22 @@ function displayTodayHourly(forecastDays) {
   
   if (!todayData) return;
   
-  const hours = todayData.hour;
+  displayDayPredictions(todayData, "Today's Forecast");
+}
+
+function displaySelectedDayHourly(selectedDate) {
+  const selectedDay = forecastData.find(day => day.date === selectedDate);
+  
+  if (!selectedDay) return;
+  
+  const date = new Date(selectedDay.date);
+  const dayName = date.toLocaleDateString('en-US', { weekday: 'long' });
+  
+  displayDayPredictions(selectedDay, `${dayName}'s Forecast`);
+}
+
+function displayDayPredictions(dayData, title) {
+  const hours = dayData.hour;
   
   // Extract morning (6am-12pm), afternoon (12pm-6pm), and evening (6pm-12am) predictions
   const morningHours = hours.filter(h => {
@@ -112,67 +139,57 @@ function displayTodayHourly(forecastDays) {
     return hour >= 18 || hour < 6;
   });
   
-  let hourlyHTML = "<h3>Today's Hourly Forecast</h3>";
+  let hourlyHTML = `<div class='hourly-section'><h3>${title}</h3><div class='hourly-grid'>`;
   
   // Morning
   if (morningHours.length > 0) {
-    hourlyHTML += "<div class='hourly-section'><h4>Morning (6 AM - 12 PM)</h4><div class='hourly-grid'>";
-    morningHours.forEach(hour => {
-      const time = hour.time.split(' ')[1].substring(0, 5);
-      const temp = hour.temp_c;
-      const icon = hour.condition.icon;
-      const condition = hour.condition.text;
-      hourlyHTML += `
-        <div class="hourly-item">
-          <p class="time">${time}</p>
-          <img src="https:${icon}" alt="Weather icon" />
-          <p class="temp">${temp}°C</p>
-          <p class="condition">${condition}</p>
-        </div>
-      `;
-    });
-    hourlyHTML += "</div></div>";
+    const morningPrediction = morningHours[0];
+    const icon = morningPrediction.condition.icon;
+    const condition = morningPrediction.condition.text;
+    hourlyHTML += `
+      <div class="hourly-item">
+        <p class="time">Morning</p>
+        <img src="https:${icon}" alt="Weather icon" />
+        <p class="condition">${condition}</p>
+      </div>
+    `;
   }
   
   // Afternoon
   if (afternoonHours.length > 0) {
-    hourlyHTML += "<div class='hourly-section'><h4>Afternoon (12 PM - 6 PM)</h4><div class='hourly-grid'>";
-    afternoonHours.forEach(hour => {
-      const time = hour.time.split(' ')[1].substring(0, 5);
-      const temp = hour.temp_c;
-      const icon = hour.condition.icon;
-      const condition = hour.condition.text;
-      hourlyHTML += `
-        <div class="hourly-item">
-          <p class="time">${time}</p>
-          <img src="https:${icon}" alt="Weather icon" />
-          <p class="temp">${temp}°C</p>
-          <p class="condition">${condition}</p>
-        </div>
-      `;
-    });
-    hourlyHTML += "</div></div>";
+    const afternoonPrediction = afternoonHours[0];
+    const icon = afternoonPrediction.condition.icon;
+    const condition = afternoonPrediction.condition.text;
+    hourlyHTML += `
+      <div class="hourly-item">
+        <p class="time">Afternoon</p>
+        <img src="https:${icon}" alt="Weather icon" />
+        <p class="condition">${condition}</p>
+      </div>
+    `;
   }
   
   // Evening
   if (eveningHours.length > 0) {
-    hourlyHTML += "<div class='hourly-section'><h4>Evening (6 PM - 12 AM)</h4><div class='hourly-grid'>";
-    eveningHours.forEach(hour => {
-      const time = hour.time.split(' ')[1].substring(0, 5);
-      const temp = hour.temp_c;
-      const icon = hour.condition.icon;
-      const condition = hour.condition.text;
-      hourlyHTML += `
-        <div class="hourly-item">
-          <p class="time">${time}</p>
-          <img src="https:${icon}" alt="Weather icon" />
-          <p class="temp">${temp}°C</p>
-          <p class="condition">${condition}</p>
-        </div>
-      `;
-    });
-    hourlyHTML += "</div></div>";
+    const eveningPrediction = eveningHours[0];
+    const icon = eveningPrediction.condition.icon;
+    const condition = eveningPrediction.condition.text;
+    hourlyHTML += `
+      <div class="hourly-item">
+        <p class="time">Evening</p>
+        <img src="https:${icon}" alt="Weather icon" />
+        <p class="condition">${condition}</p>
+      </div>
+    `;
   }
   
-  forecastResult.innerHTML += hourlyHTML;
+  hourlyHTML += "</div></div>";
+  
+  // Update only the hourly section, not the forecast days
+  let hourlySection = document.querySelector('.hourly-section');
+  if (hourlySection) {
+    hourlySection.outerHTML = hourlyHTML;
+  } else {
+    forecastResult.innerHTML += hourlyHTML;
+  }
 }
