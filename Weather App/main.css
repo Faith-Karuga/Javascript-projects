@@ -88,6 +88,22 @@
       font-size: 12px;
     }
 
+    .forecast-day.today {
+      border: 2px solid #4a6cf7;
+      background: linear-gradient(135deg, #e8f0ff, #f0f8ff);
+      box-shadow: 0 0 10px rgba(74, 108, 247, 0.2);
+    }
+
+    .forecast-day.today .today-badge {
+      background: #4a6cf7;
+      color: white;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 10px !important;
+      margin-top: 5px !important;
+      display: inline-block;
+    }
+
     .forecast-day p {
       margin: 5px 0;
     }
@@ -117,4 +133,61 @@
     .weather-app {
       width: auto;
       max-width: 800px;
+    }
+
+    .hourly-section {
+      margin-top: 25px;
+      padding-top: 20px;
+      border-top: 1px solid #eee;
+    }
+
+    .hourly-section h4 {
+      margin-top: 0;
+      margin-bottom: 15px;
+      font-size: 15px;
+      color: #4a6cf7;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .hourly-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+
+    .hourly-item {
+      background: linear-gradient(135deg, #fff9f0, #fffaf5);
+      padding: 10px;
+      border-radius: 8px;
+      text-align: center;
+      border: 1px solid #f0e0d8;
+      font-size: 11px;
+    }
+
+    .hourly-item .time {
+      font-weight: bold;
+      color: #333;
+      margin: 0 0 8px 0;
+      font-size: 12px;
+    }
+
+    .hourly-item img {
+      width: 40px;
+      height: 40px;
+      margin: 5px 0;
+    }
+
+    .hourly-item .temp {
+      color: #ff6b6b;
+      font-weight: bold;
+      margin: 5px 0;
+      font-size: 12px;
+    }
+
+    .hourly-item .condition {
+      color: #666;
+      margin: 5px 0 0 0;
+      font-size: 10px;
     }
