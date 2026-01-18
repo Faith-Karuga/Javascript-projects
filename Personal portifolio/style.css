@@ -377,7 +377,7 @@ margin: .5rem 0 2rem;
 .resume-detail{
   display: none;
 }
-.resume-detail .active{
+.resume-detail.active{
   display: block;
 }
 .resume-box .heading{
@@ -432,12 +432,12 @@ margin: .5rem 0 2rem;
   border-radius: 50%;
   margin-left: -2rem;
 }
-.resume-details.skills .resume-list {
+.resume-detail.skills .resume-list {
   grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
   height: auto;
   overflow: visible;
 }
-.resume-details.skills .resume-item{
+.resume-detail.skills .resume-item{
   position: relative;
   align-items: center;
   height: auto;
@@ -446,10 +446,10 @@ margin: .5rem 0 2rem;
   font-size: 8.5rem;
   transition: .5s;
 }
-.resume-detail.skills.resume-item:hover i {
+.resume-detail.skills .resume-item:hover i {
   color: var(--main-color);
 }
-.resume-details.skills.resume-item span {
+.resume-detail.skills .resume-item span {
   position: fixed;
   top: -20%;
   background: var(--white-color);
@@ -473,16 +473,16 @@ margin: .5rem 0 2rem;
   height: auto;
   grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
 }
-.resume-detail.about.resume-item{
+.resume-detail.about .resume-item{
   height:auto;
   padding: 0 0 .5rem;
   background: transparent;
 }
 
-.resume-detail.about.resume-item p{
+.resume-detail.about .resume-item p{
   color: var(--main-color);
 }
-.resume-detail.about.resume-item p span{
+.resume-detail.about .resume-item p span{
   color: var(--white-color);
   margin-left: 1rem;
   font-size: 1.8rem;  
@@ -646,7 +646,7 @@ margin: .5rem 0 2rem;
   margin: 2rem 0;
 }
 
-.contact-detail i {
+.contact-deatil i {
   display: inline-flex;
   background: var(--second-bg-color);
   color: var(--main-color);
@@ -656,7 +656,7 @@ margin: .5rem 0 2rem;
   margin-right: 1.5rem;
 }
 
-.contact-detail .detail p:first-child {
+.contact-deatil .detail p:first-child {
   color: var(--main-color);
 }
 
@@ -698,7 +698,7 @@ margin: .5rem 0 2rem;
   }
 }
 
-@media screen and (max-width : 992x) {
+@media screen and (max-width: 992px) {
   header {
     padding: 2rem 4%;
   }
