@@ -55,6 +55,11 @@ header.active {
   font-weight: 700;
 }
 
+nav {
+  display: flex;
+  align-items: center;
+}
+
 nav a {
   font-size: 2rem;
   color: var(--white-color);
